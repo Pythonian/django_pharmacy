@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Medicines{% endblock %}
+
+{% block content %}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <h2>MANAGE MEDICINES</h2>
+        </div>
+
+        {% include 'partials/alerts.html' %}
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            All Medicines
+                        </h2>
+                        <div class="header-dropdown m-r--5">
+                            <a href="{% url 'medicine_create' %}" class="btn btn-info">Add Medicine</a>
+                        </div>
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>NAME</th>
+                                    <th>TYPE</th>
+                                    <th>SELL PRICE</th>
+                                    <th>SHELF NO.</th>
+                                    <th>EXPIRY DATE</th>
+                                    <th>STOCK TOTAL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for medicine in medicines %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td><a href="{% url 'medicine_update' medicine.id %}">{{ medicine.name }}</a></td>
+                                    <td>{{ medicine.get_medical_type_display }}</td>
+                                    <td>{{ medicine.sell_price }}</td>
+                                    <td>{{ medicine.shelf_no }}</td>
+                                    <td>{{ medicine.expiry_date }}</td>
+                                    <td>{{ medicine.in_stock_total }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- #END# Hover Rows -->
+            
+    </div>
+</section>
+
+{% endblock %}
