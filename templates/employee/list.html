@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Employees{% endblock %}
+
+{% block content %}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <h2>MANAGE EMPLOYEES</h2>
+        </div>
+
+        {% include 'partials/alerts.html' %}
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            All Employees Data
+                        </h2>
+                        <div class="header-dropdown m-r--5">
+                            <a href="{% url 'employee_create' %}" class="btn btn-info">Add Employee</a>
+                        </div>
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>NAME</th>
+                                    <th>JOINED DATE</th>
+                                    <th>PHONE</th>
+                                    <th>ADDRESS</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for employee in employees %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td><a href="">{{ employee.name }}</a></td>
+                                    <td>{{ employee.joined_date }}</td>
+                                    <td>{{ employee.phone }}</td>
+                                    <td>{{ employee.address }}</td>
+                                    <td><a href="" class="btn btn-primary">View</a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- #END# Hover Rows -->
+            
+    </div>
+</section>
+
+{% endblock %}

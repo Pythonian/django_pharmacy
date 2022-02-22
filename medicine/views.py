@@ -165,3 +165,28 @@ def medicine_update(request, id):
 
     return render(request, 'medicine/form.html',
                   {'form': form, 'medicine': medicine})
+
+
+#### EMPLOYEE ####
+
+@login_required
+def employee_list(request):
+    employees = Employee.objects.all()
+    return render(
+        request, 'employee/list.html', {'employees': employees})
+
+
+@login_required
+def employee_create(request):
+    if request.method == 'POST':
+        form = EmployeeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Employee data successfully created.')
+            return redirect('employee_list')
+        else:
+            messages.warning(request, 'There was an issue identified below')
+    else:
+        form = EmployeeForm()
+    return render(request, 'employee/form.html',
+                  {'form': form, 'create': True})

@@ -39,6 +39,7 @@ class CompanyAccountForm(forms.ModelForm):
     transaction_date = forms.DateField(
         widget=forms.TextInput(
             attrs={'type': 'date', 'class': 'form-control'}))
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['company'].widget.attrs.update({'class': 'form-control'})
@@ -55,9 +56,21 @@ class CompanyAccountForm(forms.ModelForm):
 
 
 class EmployeeForm(forms.ModelForm):
+    joined_date = forms.DateField(
+        widget=forms.TextInput(
+            attrs={'type': 'date', 'class': 'form-control'}))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['phone'].widget.attrs.update(
+            {'class': 'form-control'})
+        self.fields['address'].widget.attrs.update(
+            {'class': 'form-control'})
+
     class Meta:
         model = Employee
-        fields = "__all__"
+        exclude = ['added_on']
 
 
 class EmployeeBankForm(forms.ModelForm):

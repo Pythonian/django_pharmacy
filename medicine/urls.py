@@ -19,4 +19,7 @@ urlpatterns = [
          views.company_account_list, name='company_account_list'),
     path('company/account-create/',
          views.company_account_create, name='company_account_create'),
+
+    path('employees/', views.employee_list, name='employee_list'),
+    path('employee/create/', views.employee_create, name='employee_create'),
 ]

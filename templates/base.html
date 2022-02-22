@@ -101,6 +101,12 @@
                             <span>Manage Company Account</span>
                         </a>
                     </li>
+                    <li class="{% url 'employee_list' as employee_list_url %} {% if request.get_full_path == employee_list_url %}active{% endif %}">
+                        <a href="{% url 'employee_list' %}">
+                            <i class="material-icons">person</i>
+                            <span>Manage Employees</span>
+                        </a>
+                    </li>
                     <li>
                         <a href="{% url 'logout' %}">
                             <i class="material-icons">exit_to_app</i>

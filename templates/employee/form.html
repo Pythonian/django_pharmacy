@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Add Company Account Transaction{% endblock %}
+{% block title %}Add Employee{% endblock %}
 
 {% block content %}
 
@@ -12,43 +12,38 @@
                 <div class="card">
                     <div class="header">
                         <h2>
-                            ADD TRANSACTION
+                            ADD EMPLOYEE
                         </h2>
                     </div>
                     <div class="body">
                         <form method="post" action="">
+                            {{ form.as_p }}
                             {% csrf_token %}
-                            <label for="id_company">Company</label>
+                            <!-- <label for="id_name">Name</label>
                             <div class="form-group">
                                 <div class="form-line">
                                     {{ form.company }}
                                 </div>
                             </div>
-                            <label for="id_transaction_type">Transaction type</label>
+                            <label for="id_joined_date">Joined date</label>
                             <div class="form-group">
                                 <div class="form-line">
-                                    {{ form.transaction_type }}
+                                    {{ form.joined_date }}
                                 </div>
                             </div>
-                            <label for="id_transaction_amt">Transaction amount</label>
+                            <label for="id_phone">Phone</label>
                             <div class="form-group">
                                 <div class="form-line">
-                                    {{ form.transaction_amt }}
+                                    {{ form.phone }}
                                 </div>
                             </div>
-                            <label for="id_transaction_date">Transaction date</label>
+                            <label for="id_address">Address</label>
                             <div class="form-group">
                                 <div class="form-line">
-                                    {{ form.transaction_date }}
+                                    {{ form.address }}
                                 </div>
-                            </div>
-                            <label for="id_payment_mode">Payment mode</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    {{ form.payment_mode }}
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">ADD TRANSACTION</button>
+                            </div> -->
+                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">ADD EMPLOYEE</button>
                         </form>
                     </div>
                 </div>
