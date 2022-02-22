@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Add Employee{% endblock %}
+{% block title %}{% if create %}Add{% else %}Update{% endif %} Employee{% endblock %}
 
 {% block content %}
 
@@ -12,44 +12,56 @@
                 <div class="card">
                     <div class="header">
                         <h2>
-                            ADD EMPLOYEE
+                            {% if create %}ADD{% else %}UPDATE{% endif %} EMPLOYEE
                         </h2>
                     </div>
                     <div class="body">
                         <form method="post" action="">
-                            {{ form.as_p }}
+                            {{ employee_form.as_p }}
                             {% csrf_token %}
-                            <!-- <label for="id_name">Name</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    {{ form.company }}
-                                </div>
-                            </div>
-                            <label for="id_joined_date">Joined date</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    {{ form.joined_date }}
-                                </div>
-                            </div>
-                            <label for="id_phone">Phone</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    {{ form.phone }}
-                                </div>
-                            </div>
-                            <label for="id_address">Address</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    {{ form.address }}
-                                </div>
-                            </div> -->
-                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">ADD EMPLOYEE</button>
+                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">{% if create %}ADD{% else %}UPDATE{% endif %} EMPLOYEE</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- #END# Vertical Layout -->
+
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            Employee Salary
+                        </h2>
+                        <div class="header-dropdown m-r--5">
+                            <a href="{% url 'employee_salary_create' employee.id %}" class="btn btn-info">Add Employee Salary</a>
+                        </div>
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>SALARY DATE</th>
+                                    <th>AMOUNT</th>
+                                    <th>ADDED ON</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for salary in employee.salaries.all %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ salary.salary_date|date:"F j, Y" }}</td>
+                                    <td>{{ salary.salary_amount }}</td>
+                                    <td>{{ salary.added_on }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 

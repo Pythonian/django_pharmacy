@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Add Salary for {{ employee.name }}{% endblock %}
+
+{% block content %}
+
+<section class="content">
+    <div class="container-fluid">
+        {% include 'partials/alerts.html' %}
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            Add Salary for {{ employee.name }}
+                        </h2>
+                    </div>
+                    <div class="body">
+                        <form method="post" action="">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">ADD SALARY</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- #END# Vertical Layout -->
+    </div>
+</section>
+
+{% endblock %}

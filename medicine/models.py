@@ -82,6 +82,8 @@ class Employee(models.Model):
     joined_date = models.DateField()
     phone = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
+    bank_name = models.CharField(max_length=255)
+    bank_account_no = models.CharField(max_length=255)
     added_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -89,16 +91,10 @@ class Employee(models.Model):
 
 
 class EmployeeSalary(models.Model):
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    employee = models.ForeignKey(
+        Employee, on_delete=models.CASCADE, related_name='salaries')
     salary_date = models.DateField()
     salary_amount = models.CharField(max_length=255)
-    added_on = models.DateTimeField(auto_now_add=True)
-
-
-class EmployeeBank(models.Model):
-    bank_account_no = models.CharField(max_length=255)
-    ifsc_no = models.CharField(max_length=255)
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     added_on = models.DateTimeField(auto_now_add=True)
 
 

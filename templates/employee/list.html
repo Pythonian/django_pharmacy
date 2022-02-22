@@ -31,6 +31,8 @@
                                     <th>JOINED DATE</th>
                                     <th>PHONE</th>
                                     <th>ADDRESS</th>
+                                    <th>BANK NAME</th>
+                                    <th>BANK ACCOUNT NO.</th>
                                     <th>ACTION</th>
                                 </tr>
                             </thead>
@@ -42,7 +44,9 @@
                                     <td>{{ employee.joined_date }}</td>
                                     <td>{{ employee.phone }}</td>
                                     <td>{{ employee.address }}</td>
-                                    <td><a href="" class="btn btn-primary">View</a></td>
+                                    <td>{{ employee.bank_name }}</td>
+                                    <td>{{ employee.bank_account_no }}</td>
+                                    <td><a href="{% url 'employee_update' employee.id %}" class="btn btn-primary">View</a></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

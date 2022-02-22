@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from .models import (Company, Medicine, EmployeeSalary,
                      BillDetails, CustomerRequest, CompanyAccount,
-                     CompanyBank, EmployeeBank, Bill, Customer,
+                     CompanyBank, Bill, Customer,
                      Employee, MedicalDetails)
 
 admin.site.register(Company)
@@ -16,4 +16,3 @@ admin.site.register(BillDetails)
 admin.site.register(CustomerRequest)
 admin.site.register(CompanyAccount)
 admin.site.register(CompanyBank)
-admin.site.register(EmployeeBank)

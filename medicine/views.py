@@ -4,10 +4,10 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import (BillDetailsForm, BillForm, CompanyAccountForm,
                     CompanyBankForm, CompanyForm, CustomerForm,
-                    CustomerRequestForm, EmployeeBankForm, EmployeeForm,
+                    CustomerRequestForm, EmployeeForm,
                     EmployeeSalaryForm, MedicalDetailsForm, MedicineForm)
 from .models import (Bill, BillDetails, Company, CompanyAccount, CompanyBank,
-                     Customer, CustomerRequest, Employee, EmployeeBank,
+                     Customer, CustomerRequest, Employee,
                      EmployeeSalary, MedicalDetails, Medicine)
 
 
@@ -190,3 +190,40 @@ def employee_create(request):
         form = EmployeeForm()
     return render(request, 'employee/form.html',
                   {'form': form, 'create': True})
+
+
+@login_required
+def employee_update(request, id):
+    employee = get_object_or_404(Employee, id=id)
+    if request.method == 'POST':
+        employee_form = EmployeeForm(request.POST, instance=employee)
+        if employee_form.is_valid():
+            employee_form.save()
+            messages.success(request, 'Employee data successfully updated.')
+            return redirect('employee_update', employee.id)
+        else:
+            messages.warning(request, 'There was an issue identified below')
+    else:
+        employee_form = EmployeeForm(instance=employee)
+    return render(request, 'employee/form.html',
+                  {'employee_form': employee_form, 'employee': employee})
+
+
+@login_required
+def employee_salary_create(request, id):
+    employee = get_object_or_404(Employee, id=id)
+    if request.method == 'POST':
+        form = EmployeeSalaryForm(request.POST)
+        if form.is_valid():
+            salary = form.save(commit=False)
+            salary.employee = employee
+            salary.save()
+            messages.success(
+                request, 'Employee salary data successfully created.')
+            return redirect('employee_update', employee.id)
+        else:
+            messages.warning(request, 'There was an issue identified below')
+    else:
+        form = EmployeeSalaryForm()
+    return render(request, 'employee/salary_form.html',
+                  {'form': form, 'employee': employee})

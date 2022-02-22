@@ -2,7 +2,7 @@ from django import forms
 
 from .models import (
     Company, CompanyBank, Medicine, MedicalDetails, CompanyAccount, Customer,
-    Employee, EmployeeBank, EmployeeSalary, CustomerRequest, Bill, BillDetails)
+    Employee, EmployeeSalary, CustomerRequest, Bill, BillDetails)
 
 
 class CompanyForm(forms.ModelForm):
@@ -67,22 +67,29 @@ class EmployeeForm(forms.ModelForm):
             {'class': 'form-control'})
         self.fields['address'].widget.attrs.update(
             {'class': 'form-control'})
+        self.fields['bank_name'].widget.attrs.update(
+            {'class': 'form-control'})
+        self.fields['bank_account_no'].widget.attrs.update(
+            {'class': 'form-control'})
 
     class Meta:
         model = Employee
         exclude = ['added_on']
 
 
-class EmployeeBankForm(forms.ModelForm):
-    class Meta:
-        model = EmployeeBank
-        fields = "__all__"
-
-
 class EmployeeSalaryForm(forms.ModelForm):
+    salary_date = forms.DateField(
+        widget=forms.TextInput(
+            attrs={'type': 'date', 'class': 'form-control'}))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['salary_amount'].widget.attrs.update(
+            {'class': 'form-control'})
+
     class Meta:
         model = EmployeeSalary
-        fields = "__all__"
+        exclude = ['employee', 'added_on']
 
 
 class CustomerRequestForm(forms.ModelForm):
@@ -101,6 +108,7 @@ class BillForm(forms.ModelForm):
     class Meta:
         model = Bill
         fields = "__all__"
+
 
 class BillDetailsForm(forms.ModelForm):
     class Meta:
