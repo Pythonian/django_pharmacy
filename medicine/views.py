@@ -96,6 +96,8 @@ def company_bank_update(request, company_id, bank_id):
                    'company_bank': company_bank})
 
 
+# COMPANY ACCOUNT
+
 @login_required
 def company_account_list(request):
     company_accounts = CompanyAccount.objects.all()
@@ -104,25 +106,22 @@ def company_account_list(request):
 
 
 @login_required
-def company_account_create(request, id):
-    company = get_object_or_404(Company, id=id)
+def company_account_create(request):
     if request.method == 'POST':
         form = CompanyAccountForm(request.POST)
         if form.is_valid():
-            company_account = form.save(commit=False)
-            company_account.company = company
-            company_account.save()
+            form.save()
             messages.success(
                 request, 'Company Account data successfully created.')
-            return redirect('company_detail', company.id)
+            return redirect('company_account_list')
         else:
             messages.warning(
                 request, 'Error occured during saving of this data.')
     else:
-        form = CompanyBankForm()
+        form = CompanyAccountForm()
 
     return render(request, 'company/account_form.html',
-                  {'form': form, 'create': True, 'company': company})
+                  {'form': form, 'create': True})
 
 
 #### MEDICINE VIEWS ####

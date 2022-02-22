@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Add Company Account Transaction{% endblock %}
+
+{% block content %}
+
+<section class="content">
+    <div class="container-fluid">
+        {% include 'partials/alerts.html' %}
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            ADD TRANSACTION
+                        </h2>
+                    </div>
+                    <div class="body">
+                        <form method="post" action="">
+                            {% csrf_token %}
+                            <label for="id_name">Company</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    {{ form.company }}
+                                </div>
+                            </div>
+                            <label for="id_medical_type">Transaction type</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    {{ form.transaction_type }}
+                                </div>
+                            </div>
+                            <label for="id_buy_price">Transaction amount</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    {{ form.transaction_amt }}
+                                </div>
+                            </div>
+                            <label for="id_sell_price">Transaction date</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    {{ form.transaction_date }}
+                                </div>
+                            </div>
+                            <label for="id_c_gst">Payment mode</label>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    {{ form.payment_mode }}
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">ADD TRANSACTION</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- #END# Vertical Layout -->
+    </div>
+</section>
+
+{% endblock %}

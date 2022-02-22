@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Company Accounts Transactions{% endblock %}
+
+{% block content %}
+
+<section class="content">
+    <div class="container-fluid">
+        {% include 'partials/alerts.html' %}
+        <!-- Hover Rows -->
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            Company Accounts Transactions
+                        </h2>
+                        <div class="header-dropdown m-r--5">
+                            <a href="{% url 'company_account_create' %}" class="btn btn-info">New Transaction</a>
+                        </div>
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>COMPANY NAME</th>
+                                    <th>TRANSACTION TYPE</th>
+                                    <th>AMOUNT</th>
+                                    <th>DATE</th>
+                                    <th>PAYMENT MODE</th>
+                                    <th>ADDED ON</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for account in company_accounts %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ account.company.name }}</td>
+                                    <td>{{ account.get_transaction_type_display }}</td>
+                                    <td>{{ account.transaction_amt }}</td>
+                                    <td>{{ account.transaction_date|date:"F j, Y" }}</td>
+                                    <td>{{ account.payment_mode }}</td>
+                                    <td>{{ account.added_on }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- #END# Hover Rows -->
+            
+    </div>
+</section>
+
+{% endblock %}

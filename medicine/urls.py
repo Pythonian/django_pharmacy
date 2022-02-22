@@ -15,4 +15,8 @@ urlpatterns = [
     path('medicine/create/', views.medicine_create, name='medicine_create'),
     path('medicine/<int:id>/', views.medicine_update, name='medicine_update'),
 
+    path('company/accounts/',
+         views.company_account_list, name='company_account_list'),
+    path('company/account-create/',
+         views.company_account_create, name='company_account_create'),
 ]

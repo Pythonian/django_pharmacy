@@ -36,9 +36,22 @@ class MedicalDetailsForm(forms.ModelForm):
 
 
 class CompanyAccountForm(forms.ModelForm):
+    transaction_date = forms.DateField(
+        widget=forms.TextInput(
+            attrs={'type': 'date', 'class': 'form-control'}))
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['company'].widget.attrs.update({'class': 'form-control'})
+        self.fields['transaction_type'].widget.attrs.update(
+            {'class': 'form-control'})
+        self.fields['transaction_amt'].widget.attrs.update(
+            {'class': 'form-control'})
+        self.fields['payment_mode'].widget.attrs.update(
+            {'class': 'form-control'})
+
     class Meta:
         model = CompanyAccount
-        fields = "__all__"
+        exclude = ['added_on']
 
 
 class EmployeeForm(forms.ModelForm):

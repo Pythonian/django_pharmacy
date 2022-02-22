@@ -86,13 +86,19 @@
                     <li class="{% url 'company_list' as company_list_url %} {% if request.get_full_path == company_list_url %}active{% endif %}">
                         <a href="{% url 'company_list' %}">
                             <i class="material-icons">assessment</i>
-                            <span>Company</span>
+                            <span>Manage Companies</span>
                         </a>
                     </li>
                     <li class="{% url 'medicine_list' as medicine_list_url %} {% if request.get_full_path == medicine_list_url %}active{% endif %}">
                         <a href="{% url 'medicine_list' %}">
                             <i class="material-icons">local_hospital</i>
-                            <span>Medicine</span>
+                            <span>Manage Medicines</span>
+                        </a>
+                    </li>
+                    <li class="{% url 'company_account_list' as company_account_list_url %} {% if request.get_full_path == company_account_list_url %}active{% endif %}">
+                        <a href="{% url 'company_account_list' %}">
+                            <i class="material-icons">account_balance</i>
+                            <span>Manage Company Account</span>
                         </a>
                     </li>
                     <li>
