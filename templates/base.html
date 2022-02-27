@@ -55,7 +55,7 @@
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="">PHARMACY MEDICAL MANAGEMENT</a>
+                <a class="navbar-brand" href="{% url 'home' %}">PHARMACY MEDICAL MANAGEMENT</a>
             </div>
         </div>
     </nav>
@@ -105,6 +105,18 @@
                         <a href="{% url 'employee_list' %}">
                             <i class="material-icons">person</i>
                             <span>Manage Employees</span>
+                        </a>
+                    </li>
+                    <li class="{% url 'create_bill' as create_bill_url %} {% if request.get_full_path == create_bill_url %}active{% endif %}">
+                        <a href="{% url 'create_bill' %}">
+                            <i class="material-icons">local_printshop</i>
+                            <span>Generate Bill</span>
+                        </a>
+                    </li>
+                    <li class="{% url 'customer_requests' as customer_requests_url %} {% if request.get_full_path == customer_requests_url %}active{% endif %}">
+                        <a href="{% url 'customer_requests' %}">
+                            <i class="material-icons">feedback</i>
+                            <span>Customer Requests</span>
                         </a>
                     </li>
                     <li>

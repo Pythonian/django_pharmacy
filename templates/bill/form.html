@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Generate Customer Bill{% endblock %}
+
+{% block content %}
+
+<section class="content">
+    <div class="container-fluid">
+        {% include 'partials/alerts.html' %}
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>Generate Customer Bill</h2>
+                    </div>
+                    <div class="body">
+                        <form method="post" action="">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <label for="id_company">Customer name</label>
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" name="bank_account_no" maxlength="255" required id="id_bank_account_no" placeholder="Enter Customer Name" class="form-control" value="{{ company_bank.bank_account_no }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <label for="id_company">Address</label>
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" name="bank_account_no" maxlength="255" required id="id_bank_account_no" placeholder="Enter Customer Address" class="form-control" value="{{ company_bank.bank_account_no }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <label for="id_company">Phone</label>
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" name="bank_account_no" maxlength="255" required id="id_bank_account_no" placeholder="Enter Customer Phone" class="form-control" value="{{ company_bank.bank_account_no }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h4>Medicine Details</h4>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="id_company">Serial no.</label>
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" name="bank_account_no" maxlength="255" required id="id_bank_account_no" placeholder="Enter Bank Account number" class="form-control" value="{{ company_bank.bank_account_no }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="id_company">Medicine name</label>
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" name="bank_account_no" maxlength="255" required id="id_bank_account_no" placeholder="Enter Bank Account number" class="form-control" value="{{ company_bank.bank_account_no }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="id_company">Quantity</label>
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" name="bank_account_no" maxlength="255" required id="id_bank_account_no" placeholder="Enter Bank Account number" class="form-control" value="{{ company_bank.bank_account_no }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="id_company">Quantity Type</label>
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" name="bank_account_no" maxlength="255" required id="id_bank_account_no" placeholder="Enter Bank Account number" class="form-control" value="{{ company_bank.bank_account_no }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="id_company">Unit Price</label>
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" name="bank_account_no" maxlength="255" required id="id_bank_account_no" placeholder="Enter Bank Account number" class="form-control" value="{{ company_bank.bank_account_no }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="id_company">Amount</label>
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" name="bank_account_no" maxlength="255" required id="id_bank_account_no" placeholder="Enter Bank Account number" class="form-control" value="{{ company_bank.bank_account_no }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">GENERATE BILL</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- #END# Vertical Layout -->
+    </div>
+</section>
+
+{% endblock %}

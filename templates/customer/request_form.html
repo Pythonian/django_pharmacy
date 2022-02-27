@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Add Salary for {{ employee.name }}{% endblock %}
+{% block title %}{% if create %}Add{% else %}Update{% endif %} Customer Request{% endblock %}
 
 {% block content %}
 
@@ -12,14 +12,14 @@
                 <div class="card">
                     <div class="header">
                         <h2>
-                            Add Salary for {{ employee.name }}
+                            {% if create %}ADD{% else %}UPDATE{% endif %} CUSTOMER REQUEST
                         </h2>
                     </div>
                     <div class="body">
                         <form method="post" action="">
-                            {% csrf_token %}
                             {{ form.as_p }}
-                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">ADD SALARY</button>
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">{% if create %}ADD{% else %}UPDATE{% endif %} CUSTOMER REQUEST</button>
                         </form>
                     </div>
                 </div>

@@ -112,9 +112,13 @@ class CustomerRequest(models.Model):
     customer_name = models.CharField(max_length=255)
     phone = models.CharField(max_length=255)
     medicine_details = models.CharField(max_length=255)
-    status = models.BooleanField(default=False)
+    status = models.BooleanField(
+        'Has request been granted?', default=False)
     added_on = models.DateTimeField(auto_now_add=True)
-    prescription = models.FileField(default="")
+    prescription = models.FileField(blank=True)
+
+    class Meta:
+        ordering = ['-added_on']
 
     def __str__(self):
         return self.customer_name

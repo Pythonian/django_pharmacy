@@ -227,3 +227,64 @@ def employee_salary_create(request, id):
         form = EmployeeSalaryForm()
     return render(request, 'employee/salary_form.html',
                   {'form': form, 'employee': employee})
+
+
+#### GENERATE BILLS ####
+
+def generate_customer_bill(request):
+    if request.method == 'POST':
+        form = BillForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Bill successfully generated.')
+            return redirect('/')
+        else:
+            messages.warning(request, 'There was an issue identified below')
+    else:
+        form = BillForm()
+    return render(request, 'bill/form.html',
+                  {'form': form})
+
+
+#### CUSTOMER REQUESTS ####
+
+@login_required
+def customer_requests(request):
+    requests = CustomerRequest.objects.all()
+    return render(
+        request, 'customer/requests.html', {'requests': requests})
+
+
+@login_required
+def create_customer_requests(request):
+    if request.method == 'POST':
+        form = CustomerRequestForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Company request successfully created.')
+            return redirect('customer_requests')
+        else:
+            messages.warning(request, 'An error occured. Check below.')
+    else:
+        form = CustomerRequestForm()
+
+    return render(request, 'customer/request_form.html',
+                  {'form': form, 'create': True})
+
+
+@login_required
+def customer_request(request, id):
+    customer_request = get_object_or_404(CustomerRequest, id=id)
+    if request.method == 'POST':
+        form = CustomerRequestForm(request.POST, instance=customer_request)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Customer request successfully updated.')
+            return redirect('customer_request', customer_request.id)
+        else:
+            messages.warning(request, 'An error occured. Check below.')
+    else:
+        form = CustomerRequestForm(instance=customer_request)
+    return render(
+        request, 'customer/form.html',
+        {'customer_request': customer_request, 'form': form})

@@ -93,9 +93,20 @@ class EmployeeSalaryForm(forms.ModelForm):
 
 
 class CustomerRequestForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['customer_name'].widget.attrs.update(
+            {'class': 'form-control'})
+        self.fields['phone'].widget.attrs.update({'class': 'form-control'})
+        self.fields['medicine_details'].widget.attrs.update(
+            {'class': 'form-control'})
+        self.fields['prescription'].widget.attrs.update(
+            {'class': 'form-control'})
+
     class Meta:
         model = CustomerRequest
-        fields = "__all__"
+        fields = ['customer_name', 'phone',
+                  'medicine_details', 'prescription']
 
 
 class CustomerForm(forms.ModelForm):

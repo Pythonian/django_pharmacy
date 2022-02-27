@@ -26,4 +26,11 @@ urlpatterns = [
          views.employee_update, name='employee_update'),
     path('employee/<int:id>/salary-create/',
          views.employee_salary_create, name='employee_salary_create'),
+
+    path('generate-bill/', views.generate_customer_bill, name='create_bill'),
+
+    path('customer-requests/',
+         views.customer_requests, name='customer_requests'),
+    path('customer-requests/create/',
+         views.create_customer_requests, name='create_customer_requests'),
 ]
