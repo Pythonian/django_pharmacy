@@ -1,4 +1,1 @@
-Add Medicine Details to Medicine via Formsets using idea from django_lms
-Ensure the Company name shows in the Update page of Medicine
-
-Part 28
+Part 33, 32, 31, 27, 28, 29

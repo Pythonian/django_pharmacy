@@ -1,7 +1,7 @@
 from django import forms
 
 from .models import (
-    Company, CompanyBank, Medicine, MedicalDetails, CompanyAccount, Customer,
+    Company, CompanyBank, Medicine, CompanyAccount, Customer,
     Employee, EmployeeSalary, CustomerRequest, Bill, BillDetails)
 
 
@@ -18,21 +18,43 @@ class CompanyBankForm(forms.ModelForm):
 
 
 class MedicineForm(forms.ModelForm):
+    expiry_date = forms.DateField(
+        widget=forms.TextInput(
+            attrs={'type': 'date', 'class': 'form-control'}))
+    manufacturing_date = forms.DateField(
+        widget=forms.TextInput(
+            attrs={'type': 'date', 'class': 'form-control'}))
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['medical_type'].widget.attrs.update(
+        self.fields['name'].widget.attrs.update(
             {'class': 'form-control'})
         self.fields['company'].widget.attrs.update({'class': 'form-control'})
+        self.fields['medical_type'].widget.attrs.update(
+            {'class': 'form-control'})
+        self.fields['buy_price'].widget.attrs.update({'class': 'form-control'})
+        self.fields['sell_price'].widget.attrs.update(
+            {'class': 'form-control'})
+        self.fields['c_gst'].widget.attrs.update({'class': 'form-control'})
+        self.fields['s_gst'].widget.attrs.update(
+            {'class': 'form-control'})
+        self.fields['batch_no'].widget.attrs.update({'class': 'form-control'})
+        self.fields['shelf_no'].widget.attrs.update(
+            {'class': 'form-control'})
+        self.fields['description'].widget.attrs.update(
+            {'class': 'form-control'})
+        self.fields['salt_name'].widget.attrs.update(
+            {'class': 'form-control'})
+        self.fields['salt_quantity'].widget.attrs.update(
+            {'class': 'form-control'})
+        self.fields['in_stock_total'].widget.attrs.update(
+            {'class': 'form-control'})
+        self.fields['quantity_in_strip'].widget.attrs.update(
+            {'class': 'form-control'})
 
     class Meta:
         model = Medicine
         exclude = ['added_on']
-
-
-class MedicalDetailsForm(forms.ModelForm):
-    class Meta:
-        model = MedicalDetails
-        fields = "__all__"
 
 
 class CompanyAccountForm(forms.ModelForm):

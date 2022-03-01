@@ -5,10 +5,10 @@ from django.contrib.auth.decorators import login_required
 from .forms import (BillDetailsForm, BillForm, CompanyAccountForm,
                     CompanyBankForm, CompanyForm, CustomerForm,
                     CustomerRequestForm, EmployeeForm,
-                    EmployeeSalaryForm, MedicalDetailsForm, MedicineForm)
+                    EmployeeSalaryForm, MedicineForm)
 from .models import (Bill, BillDetails, Company, CompanyAccount, CompanyBank,
                      Customer, CustomerRequest, Employee,
-                     EmployeeSalary, MedicalDetails, Medicine)
+                     EmployeeSalary, Medicine)
 
 
 #### COMPANY VIEWS ####

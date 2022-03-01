@@ -58,6 +58,8 @@ class Medicine(models.Model):
     shelf_no = models.CharField(max_length=255)
     expiry_date = models.DateField()
     manufacturing_date = models.DateField()
+    salt_name = models.CharField(max_length=255)
+    salt_quantity = models.CharField(max_length=255)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     description = models.CharField(max_length=255)
     in_stock_total = models.IntegerField()
@@ -66,15 +68,6 @@ class Medicine(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class MedicalDetails(models.Model):
-    medicine = models.ForeignKey(Medicine, on_delete=models.CASCADE)
-    salt_name = models.CharField(max_length=255)
-    salt_quantity = models.CharField(max_length=255)
-    salt_quantity_type = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
-    added_on = models.DateTimeField(auto_now_add=True)
 
 
 class Employee(models.Model):

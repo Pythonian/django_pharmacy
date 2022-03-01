@@ -18,98 +18,13 @@
                     <div class="body">
                         <form method="post" action="">
                             {% csrf_token %}
-                            <label for="id_name">Name</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" name="name" maxlength="255" class="form-control" placeholder="Enter medicine name" required id="id_name" value="{{ medicine.name }}">
-                                </div>
-                            </div>
-                            <label for="id_medical_type">Medical type</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    {{ form.medical_type }}
-                                </div>
-                            </div>
-                            <label for="id_buy_price">Buy price</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" name="buy_price" maxlength="255" required id="id_buy_price" class="form-control" placeholder="Enter cost price" value="{{ medicine.buy_price }}">
-                                </div>
-                            </div>
-                            <label for="id_sell_price">Sell price</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" name="sell_price" maxlength="255" required id="id_sell_price" class="form-control" placeholder="Enter selling price" value="{{ medicine.sell_price }}">
-                                </div>
-                            </div>
-                            <label for="id_c_gst">C GST</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" name="c_gst" maxlength="255" required id="id_c_gst" class="form-control" placeholder="Enter C GST" value="{{ medicine.c_gst }}">
-                                </div>
-                            </div>
-                            <label for="id_s_gst">S GST</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" name="s_gst" maxlength="255" required id="id_s_gst" class="form-control" placeholder="Enter S GST" value="{{ medicine.s_gst }}">
-                                </div>
-                            </div>
-                            <label for="id_batch_no">Batch no.</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" name="batch_no" maxlength="255" required id="id_batch_no" class="form-control" placeholder="Enter Batch no." value="{{ medicine.batch_no }}">
-                                </div>
-                            </div>
-                            <label for="id_shelf_no">Shelf no.</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" name="shelf_no" maxlength="255" required id="id_shelf_no" class="form-control" placeholder="Enter shelf no." value="{{ medicine.shelf_no }}">
-                                </div>
-                            </div>
-                            <label for="id_expiry_date">Expiry date</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="date" name="expiry_date" required id="id_expiry_date" class="form-control" placeholder="Enter expiry date" value="{{ medicine.expiry_date }}">
-                                </div>
-                            </div>
-                            <label for="id_manufacturing_date">Manufacturing date</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="date" name="manufacturing_date" required id="id_manufacturing_date" class="form-control" placeholder="Enter Manufacturing Date" value="{{ medicine.manufacturing_date }}">
-                                </div>
-                            </div>
-                            <label for="id_company">Company</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    {{ form.company }}
-                                </div>
-                            </div>
-                            <label for="id_description">Description</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" name="description" class="form-control" maxlength="255" required id="id_description" placeholder="Enter medicine description" value="{{ medicine.description }}">
-                                </div>
-                            </div>
-                            <label for="id_in_stock_total">In stock total</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="number" name="in_stock_total" required id="id_in_stock_total" class="form-control" placeholder="Enter Stock Total" value="{{ medicine.in_stock_total }}">
-                                </div>
-                            </div>
-                            <label for="id_quantity_in_strip">Quantity in strip</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="number" name="quantity_in_strip" required id="id_quantity_in_strip" class="form-control" placeholder="Enter Quantity in Strip" value="{{ medicine.quantity_in_strip }}">
-                                </div>
-                            </div>
-
+                            {{ form.as_p }}
                             <button type="submit" class="btn btn-primary m-t-15 waves-effect">{% if create %}ADD{% else %}UPDATE{% endif %} MEDICINE</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- #END# Vertical Layout -->
     </div>
 </section>
 
