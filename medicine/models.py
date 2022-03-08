@@ -32,9 +32,8 @@ class CompanyAccount(models.Model):
 
 
 class CompanyBank(models.Model):
-    # bank name
     bank_account_no = models.CharField(max_length=255)
-    ifsc_no = models.CharField(max_length=255)
+    bank_name = models.CharField(max_length=255)
     company = models.ForeignKey(
         Company, on_delete=models.CASCADE, related_name='banks')
     added_on = models.DateTimeField(auto_now_add=True)

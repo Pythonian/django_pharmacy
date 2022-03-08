@@ -19,18 +19,7 @@
                     <div class="body">
                         <form method="post" action="">
                             {% csrf_token %}
-                            <label for="id_bank_account_no">Bank Account No.</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input type="text" name="bank_account_no" maxlength="255" required id="id_bank_account_no" placeholder="Enter Bank Account number" class="form-control" value="{{ company_bank.bank_account_no }}">
-                                </div>
-                            </div>
-                            <label for="id_ifsc_no">IFSC No.</label>
-                            <div class="form-group">
-                                <div class="form-line">
-                                   <input type="text" name="ifsc_no" maxlength="255" required id="id_ifsc_no" class="form-control" placeholder="Enter IFSC number" value="{{ company_bank.ifsc_no }}">
-                                </div>
-                            </div>
+                            {{ form.as_p }}
 
                             <button type="submit" class="btn btn-primary m-t-15 waves-effect">{% if create %}ADD{% else %}UPDATE{% endif %} BANK ACCOUNT</button>
                         </form>

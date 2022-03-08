@@ -12,9 +12,16 @@ class CompanyForm(forms.ModelForm):
 
 
 class CompanyBankForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['bank_name'].widget.attrs.update(
+            {'class': 'form-control'})
+        self.fields['bank_account_no'].widget.attrs.update(
+            {'class': 'form-control'})
+
     class Meta:
         model = CompanyBank
-        fields = ['bank_account_no', 'ifsc_no']
+        fields = ['bank_account_no', 'bank_name']
 
 
 class MedicineForm(forms.ModelForm):

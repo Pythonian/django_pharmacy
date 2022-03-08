@@ -79,7 +79,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>ACCOUNT NUMBER</th>
-                                    <th>IFSC CODE</th>
+                                    <th>BANK NAME</th>
                                     <th>ADDED ON</th>
                                     <th>ACTION</th>
                                 </tr>
@@ -89,7 +89,7 @@
                                 <tr>
                                     <th scope="row">{{ forloop.counter }}</th>
                                     <td>{{ account.bank_account_no }}</td>
-                                    <td>{{ account.ifsc_no }}</td>
+                                    <td>{{ account.bank_name }}</td>
                                     <td>{{ account.added_on }}</td>
                                     <td>
                                         <a href="{% url 'company_bank_update' account.company.id account.id %}" class="btn btn-info">Edit</a>
