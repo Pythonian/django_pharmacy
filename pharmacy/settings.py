@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'account',
     'medicine',
-    'rest_framework',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +129,7 @@ LOGOUT_REDIRECT_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 
 LOGIN_URL = 'login'
+
+GRAPH_MODELS = {
+    'app_labels': ["medicine", "account"],
+}

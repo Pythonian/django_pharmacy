@@ -1,11 +1,9 @@
 ## Pharmacy Medical Management System
 
-### How to Install Locally
+### How to Setup Locally
 
-> Open up your terminal on your PC
-
-* Change into the directory you want to clone the project into
-* Clone the repository from github `git clone https://github.com/Pythonian/django_pharmacy.git`
+* Clone this repo `git clone https://github.com/Pythonian/django_pharmacy.git`
+* Change into the directory `cd django_pharmacy`
 * Create a virtualenv `python3 -m venv venv` 
 * Activate your virtualenv `. venv/bin/activate`
 * Install the project dependencies `pip install -r requirements.txt`
