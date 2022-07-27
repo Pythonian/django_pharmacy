@@ -261,7 +261,7 @@ def create_customer_requests(request):
         form = CustomerRequestForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Company request successfully created.')
+            messages.success(request, 'Customer request successfully created.')
             return redirect('customer_requests')
         else:
             messages.warning(request, 'An error occured. Check below.')

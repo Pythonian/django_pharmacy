@@ -13,5 +13,6 @@ urlpatterns = [
     path('signup/pharmacist/',
          views.PharmacistSignUpView.as_view(), name='pharmacist_signup'),
     path('administrator/', views.administrator_dashboard, name='administrator_dashboard'),
+    path('pharmacist/', views.pharmacist_dashboard, name='pharmacist_dashboard'),
     path('', views.home, name='home'),
 ]

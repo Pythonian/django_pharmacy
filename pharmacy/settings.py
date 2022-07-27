@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'account',
     'medicine',
     'django_extensions',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -133,3 +134,5 @@ LOGIN_URL = 'login'
 GRAPH_MODELS = {
     'app_labels': ["medicine", "account"],
 }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
