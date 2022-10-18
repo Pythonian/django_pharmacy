@@ -131,11 +131,13 @@ class CustomerRequestForm(forms.ModelForm):
             {'class': 'form-control'})
         self.fields['prescription'].widget.attrs.update(
             {'class': 'form-control'})
+        self.fields['status'].widget.attrs.update(
+            {'class': 'form-select form-control'})
 
     class Meta:
         model = CustomerRequest
         fields = ['customer_name', 'phone',
-                  'medicine_details', 'prescription']
+                  'medicine_details', 'prescription', 'status']
 
 
 class CustomerForm(forms.ModelForm):
@@ -145,12 +147,20 @@ class CustomerForm(forms.ModelForm):
 
 
 class BillForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.visible_fields():
+            field.field.widget.attrs['class'] = 'form-control'
     class Meta:
         model = Bill
-        fields = "__all__"
+        fields = ['customer_name', 'customer_address', 'customer_phonenumber']
 
 
 class BillDetailsForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.visible_fields():
+            field.field.widget.attrs['class'] = 'form-control'
     class Meta:
         model = BillDetails
-        fields = "__all__"
+        fields = ['medicine', 'quantity']

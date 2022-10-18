@@ -33,4 +33,5 @@ urlpatterns = [
          views.customer_requests, name='customer_requests'),
     path('customer-requests/create/',
          views.create_customer_requests, name='create_customer_requests'),
+     path('customer-request/<int:id>/', views.customer_request, name='customer_request'),
 ]

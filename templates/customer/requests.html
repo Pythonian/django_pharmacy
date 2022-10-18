@@ -30,7 +30,7 @@
                                     <th>PHONE NO.</th>
                                     <th>MEDICINE DETAILS</th>
                                     <th>REQUESTED ON</th>
-                                    <!-- <th>ACTION</th> -->
+                                    <th>UPDATE</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,7 +41,7 @@
                                     <td>{{ request.phone }}</td>
                                     <td>{{ request.medicine_details }}</td>
                                     <td>{{ request.added_on }}</td>
-                                    <!-- <td><a href="" class="btn btn-block btn-warning">View</a></td> -->
+                                    <td><a href="{% url 'customer_request' request.id %}" class="btn btn-block {% if request.status == 'P' %}btn-warning{% else %}btn-success{% endif %}">{{ request.get_status_display }}</a></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

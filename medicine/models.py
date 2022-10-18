@@ -101,11 +101,16 @@ class Customer(models.Model):
 
 
 class CustomerRequest(models.Model):
+    PENDING = 'P'
+    DONE = 'D'
+    STATUS_CHOICE = (
+        (PENDING, 'Pending'),
+        (DONE, 'Done'),)
     customer_name = models.CharField(max_length=255)
     phone = models.CharField(max_length=255)
     medicine_details = models.CharField(max_length=255)
-    status = models.BooleanField(
-        'Has request been granted?', default=False)
+    status = models.CharField(
+        'Request status', max_length=1, choices=STATUS_CHOICE, default=PENDING)
     added_on = models.DateTimeField(auto_now_add=True)
     prescription = models.FileField(blank=True)
 
@@ -117,12 +122,36 @@ class CustomerRequest(models.Model):
 
 
 class Bill(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    customer_name = models.CharField(max_length=255)
+    customer_address = models.CharField(max_length=255, blank=True)
+    customer_phonenumber = models.CharField(max_length=255)
+    total_amount = models.DecimalField(
+        max_digits=15, decimal_places=2,
+        blank=True, null=True)
     added_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Bill for {self.customer_name}'
+
+    def get_total_cost(self):
+        return sum(item.get_cost() for item in self.items.all())
+
+    # def save(self, *args, **kwargs):
+    #     self.unit_price = self.medicine.sell_price
+    #     self.total_amount = self.quantity * self.unit_price
+    #     super().save(*args, **kwargs)
 
 
 class BillDetails(models.Model):
-    bill = models.ForeignKey(Bill, on_delete=models.CASCADE)
+    bill = models.ForeignKey(Bill, on_delete=models.CASCADE, related_name='items')
     medicine = models.ForeignKey(Medicine, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     added_on = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def get_cost(self):
+        return self.medicine.sell_price
+
+    @property
+    def get_total_cost(self):
+        return self.get_cost * self.quantity

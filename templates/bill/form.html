@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block title %}Generate Customer Bill{% endblock %}
 
@@ -14,14 +15,15 @@
                         <h2>Generate Customer Bill</h2>
                     </div>
                     <div class="body">
-                        <form method="post" action="">
+                        <form method="post" action="" id="billForm">
                             {% csrf_token %}
+                            
                             <div class="row">
                                 <div class="col-lg-4">
                                     <label for="id_company">Customer name</label>
                                     <div class="form-group">
                                         <div class="form-line">
-                                            <input type="text" name="bank_account_no" maxlength="255" required id="id_bank_account_no" placeholder="Enter Customer Name" class="form-control" value="{{ company_bank.bank_account_no }}">
+                                            {{ bill_form.customer_name }}
                                         </div>
                                     </div>
                                 </div>
@@ -29,7 +31,7 @@
                                     <label for="id_company">Address</label>
                                     <div class="form-group">
                                         <div class="form-line">
-                                            <input type="text" name="bank_account_no" maxlength="255" required id="id_bank_account_no" placeholder="Enter Customer Address" class="form-control" value="{{ company_bank.bank_account_no }}">
+                                            {{ bill_form.customer_address }}
                                         </div>
                                     </div>
                                 </div>
@@ -37,46 +39,21 @@
                                     <label for="id_company">Phone</label>
                                     <div class="form-group">
                                         <div class="form-line">
-                                            <input type="text" name="bank_account_no" maxlength="255" required id="id_bank_account_no" placeholder="Enter Customer Phone" class="form-control" value="{{ company_bank.bank_account_no }}">
+                                            {{ bill_form.customer_phonenumber }}
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <h4>Medicine Details</h4>
+                            {# formset.as_p #}
                             <div class="row">
-                                <div class="col-lg-3">
-                                    <label for="id_company">Medicine name</label>
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            <input type="text" name="bank_account_no" maxlength="255" required id="id_bank_account_no" placeholder="Enter Bank Account number" class="form-control" value="{{ company_bank.bank_account_no }}">
-                                        </div>
-                                    </div>
+                                {% for line in formset %}
+                                <div class="col-lg-6">
+                                    <label for="id_company">{{ form.label }}</label>
+                                    {{ line.as_p }}
                                 </div>
-                                <div class="col-lg-3">
-                                    <label for="id_company">Quantity</label>
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            <input type="text" name="bank_account_no" maxlength="255" required id="id_bank_account_no" placeholder="Enter Bank Account number" class="form-control" value="{{ company_bank.bank_account_no }}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <label for="id_company">Unit Price</label>
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            <input type="text" name="bank_account_no" maxlength="255" required id="id_bank_account_no" placeholder="Enter Bank Account number" class="form-control" value="{{ company_bank.bank_account_no }}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <label for="id_company">Amount</label>
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            <input type="text" name="bank_account_no" maxlength="255" required id="id_bank_account_no" placeholder="Enter Bank Account number" class="form-control" value="{{ company_bank.bank_account_no }}">
-                                        </div>
-                                    </div>
-                                </div>
+                                {% endfor %}
                             </div>
                             <button type="submit" class="btn btn-primary m-t-15 waves-effect">GENERATE BILL</button>
                         </form>
@@ -87,5 +64,36 @@
         <!-- #END# Vertical Layout -->
     </div>
 </section>
+
+<script>
+    var form = document.getElementById("form");
+    // Disable this submit button for now
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+    });
+
+    // You can use 'change' event rather but 'input' event listens
+    // as the user types while 'change' happens when the user leaves
+    // the input. Replace and see the differences
+    form.addEventListener("input", (event) => {
+        // Cast the values to integers
+        var amount = Number(document.getElementById("amount").value);
+        // Return zero instead in case we get NaN from the coercion
+        amount = amount ? amount : 0;
+
+        var quantity = Number(document.getElementById("id_quantity").value);
+        quantity = quantity ? quantity : 0;
+
+        var total = document.getElementById("total");
+
+        if (amount && quantity) {
+            // both amount and quantity are valid integers
+            total.textContent = amount * quantity;
+        } else {
+            // clear the field
+            total.textContent = "";
+        }
+    });
+</script>
 
 {% endblock %}

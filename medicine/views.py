@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.forms.models import modelformset_factory
 
 from .forms import (BillDetailsForm, BillForm, CompanyAccountForm,
                     CompanyBankForm, CompanyForm, CustomerForm,
@@ -232,18 +233,23 @@ def employee_salary_create(request, id):
 #### GENERATE BILLS ####
 
 def generate_customer_bill(request):
-    if request.method == 'POST':
-        form = BillForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Bill successfully generated.')
-            return redirect('/')
-        else:
-            messages.warning(request, 'There was an issue identified below')
-    else:
-        form = BillForm()
+    # if request.method == 'POST':
+    bill_form = BillForm(request.POST or None)
+    BillDetailsFormset = modelformset_factory(BillDetails, form=BillDetailsForm, extra=1)
+    formset = BillDetailsFormset(request.POST or None)
+    # billdetails_form = BillDetailsForm(request.POST)
+    
+    if bill_form.is_valid() and formset.is_valid():
+        bill_form.save()
+        formset.save()
+        messages.success(request, 'Bill successfully generated.')
+        return redirect('generate_customer_bill')
+    # else:
+    #     bill_form = BillForm()
+        # formset = BillDetailsFormset()
+        # billdetails_form = BillDetailsForm()
     return render(request, 'bill/form.html',
-                  {'form': form})
+                  {'bill_form': bill_form, 'formset': formset})
 
 
 #### CUSTOMER REQUESTS ####
@@ -286,5 +292,5 @@ def customer_request(request, id):
     else:
         form = CustomerRequestForm(instance=customer_request)
     return render(
-        request, 'customer/form.html',
+        request, 'customer/request_form.html',
         {'customer_request': customer_request, 'form': form})

@@ -17,8 +17,13 @@
                     </div>
                     <div class="body">
                         <form method="post" action="">
-                            {{ form.as_p }}
                             {% csrf_token %}
+                            {% if create %}
+                            {{ form.as_p }}
+                            {% else %}
+                            {{ employee_form.as_p }}
+                            {% endif %}
+                            
                             <button type="submit" class="btn btn-primary m-t-15 waves-effect">{% if create %}ADD{% else %}UPDATE{% endif %} EMPLOYEE</button>
                         </form>
                     </div>

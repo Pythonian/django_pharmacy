@@ -53,6 +53,8 @@ class PharmacistSignUpView(CreateView):
 @login_required
 def administrator_dashboard(request):
     customer_request = CustomerRequest.objects.all().count()
+    pending_requests = CustomerRequest.objects.filter(status=CustomerRequest.PENDING).count()
+    completed_requests = CustomerRequest.objects.filter(status=CustomerRequest.DONE).count()
     bill_count = Bill.objects.all().count()
     medicine_count = Medicine.objects.all().count()
     company_count = Company.objects.all().count()
@@ -68,12 +70,6 @@ def administrator_dashboard(request):
         sell_amt = float(
             sell_amt + float(bill.medicine.sell_price)) * int(bill.qty)
     profit_amt = sell_amt - buy_amt
-
-    customer_request_pending = CustomerRequest.objects.filter(
-        status=False).count()
-
-    customer_request_completed = CustomerRequest.objects.filter(
-        status=True).count()
 
     current_date = datetime.date.today().strftime("%Y-%m-%d")
     current_date1 = datetime.date.today()
@@ -129,10 +125,10 @@ def administrator_dashboard(request):
          'company_count': company_count,
          'employee_count': employee_count,
          'profit_amt': profit_amt,
-         'customer_request_pending': customer_request_pending,
-         'customer_request_completed': customer_request_completed,
          'profit_amt_today': profit_amt_today,
          'medicine_expire': medicine_expire,
+         'completed_requests': completed_requests,
+         'pending_requests': pending_requests,
          'sell_amt': sell_amt})
 
 
