@@ -10,9 +10,9 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('signup/administrator/',
          views.AdministratorSignUpView.as_view(), name='administrator_signup'),
-    path('signup/pharmacist/',
-         views.PharmacistSignUpView.as_view(), name='pharmacist_signup'),
+    path('signup/employee/',
+         views.EmployeeSignUpView.as_view(), name='employee_signup'),
     path('administrator/', views.administrator_dashboard, name='administrator_dashboard'),
-    path('pharmacist/', views.pharmacist_dashboard, name='pharmacist_dashboard'),
+    path('employee/', views.employee_dashboard, name='employee_dashboard'),
     path('', views.home, name='home'),
 ]

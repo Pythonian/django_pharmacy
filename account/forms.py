@@ -20,7 +20,7 @@ class AdministratorSignUpForm(UserCreationForm):
         return user
 
 
-class PharmacistSignUpForm(UserCreationForm):
+class EmployeeSignUpForm(UserCreationForm):
     email = forms.EmailField(required=True)
 
     class Meta(UserCreationForm.Meta):
@@ -30,6 +30,6 @@ class PharmacistSignUpForm(UserCreationForm):
     @transaction.atomic
     def save(self):
         user = super().save(commit=False)
-        user.is_administrator = False
+        user.is_employee = True
         user.save()
         return user

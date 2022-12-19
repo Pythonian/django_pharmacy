@@ -1,1 +1,8 @@
-- Generate customer bill
+- Manage the record of pharmacy employees and the drugs sold by each of them
+- Generate report for all activities
+- Manage the inventory of each drug sold in the pharmacy
+- Download the Material icon library to link locally
+- Display the profit and sales chart (of medicines sold daily) in the dashboard
+- Generate customer multiple bill / Reprint a receipt
+- Have a record of a customer's historical drug purchase at the pharmacy
+- Notify when drug is running out of stock and ability to contact drug supplier for a restock

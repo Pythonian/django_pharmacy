@@ -29,7 +29,7 @@
                                     <th>#</th>
                                     <th>NAME</th>
                                     <th>TYPE</th>
-                                    <th>SELL PRICE</th>
+                                    <th>SALE PRICE</th>
                                     <th>SHELF NO.</th>
                                     <th>EXPIRY DATE</th>
                                     <th>STOCK TOTAL</th>
@@ -41,7 +41,7 @@
                                     <th scope="row">{{ forloop.counter }}</th>
                                     <td><a href="{% url 'medicine_update' medicine.id %}">{{ medicine.name }}</a></td>
                                     <td>{{ medicine.get_medical_type_display }}</td>
-                                    <td>{{ medicine.sell_price }}</td>
+                                    <td>&#8358;{{ medicine.sale_price }}</td>
                                     <td>{{ medicine.shelf_no }}</td>
                                     <td>{{ medicine.expiry_date }}</td>
                                     <td>{{ medicine.in_stock_total }}</td>

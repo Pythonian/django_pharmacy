@@ -3,13 +3,14 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.forms.models import modelformset_factory
 
+from account.models import Employee, EmployeeSalary
+
 from .forms import (BillDetailsForm, BillForm, CompanyAccountForm,
                     CompanyBankForm, CompanyForm, CustomerForm,
                     CustomerRequestForm, EmployeeForm,
                     EmployeeSalaryForm, MedicineForm)
 from .models import (Bill, BillDetails, Company, CompanyAccount, CompanyBank,
-                     Customer, CustomerRequest, Employee,
-                     EmployeeSalary, Medicine)
+                     Customer, CustomerRequest, Medicine)
 
 
 #### COMPANY VIEWS ####

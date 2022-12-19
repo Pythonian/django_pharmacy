@@ -9,7 +9,7 @@ from medicine.models import (
 
 from .models import User
 from .forms import (
-    AdministratorSignUpForm, PharmacistSignUpForm)
+    AdministratorSignUpForm, EmployeeSignUpForm)
 
 
 @login_required
@@ -17,7 +17,7 @@ def home(request):
     if request.user.is_administrator:
         return redirect('administrator_dashboard')
     else:
-        return redirect('pharmacist_dashboard')
+        return redirect('employee_dashboard')
 
 
 class AdministratorSignUpView(CreateView):
@@ -35,19 +35,19 @@ class AdministratorSignUpView(CreateView):
         return redirect('administrator_dashboard')
 
 
-class PharmacistSignUpView(CreateView):
+class EmployeeSignUpView(CreateView):
     model = User
-    form_class = PharmacistSignUpForm
+    form_class = EmployeeSignUpForm
     template_name = 'registration/signup.html'
 
     def get_context_data(self, **kwargs):
-        kwargs['user_type'] = 'a pharmacist'
+        kwargs['user_type'] = 'an Employee'
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('pharmacist_dashboard')
+        return redirect('employee_dashboard')
 
 
 @login_required
@@ -66,9 +66,9 @@ def administrator_dashboard(request):
     buy_amt = 0
     for bill in bill_details:
         buy_amt = float(
-            buy_amt + float(bill.medicine.buy_price)) * int(bill.qty)
+            buy_amt + float(bill.medicine.cost_price)) * int(bill.quantity)
         sell_amt = float(
-            sell_amt + float(bill.medicine.sell_price)) * int(bill.qty)
+            sell_amt + float(bill.medicine.sale_price)) * int(bill.quantity)
     profit_amt = sell_amt - buy_amt
 
     current_date = datetime.date.today().strftime("%Y-%m-%d")
@@ -82,10 +82,10 @@ def administrator_dashboard(request):
     buy_amt_today = 0
     for bill in bill_details_today:
         buy_amt_today = float(
-            buy_amt_today + float(bill.medicine.buy_price)) * int(bill.qty)
+            buy_amt_today + float(bill.medicine.cost_price)) * int(bill.quantity)
         sell_amt_today = float(
             sell_amt_today + float(
-                bill.medicine.sell_price)) * int(bill.qty)
+                bill.medicine.sale_price)) * int(bill.quantity)
     profit_amt_today = sell_amt_today - buy_amt_today
 
     medicine_expire = Medicine.objects.filter(
@@ -105,10 +105,10 @@ def administrator_dashboard(request):
         for billsingle in bill_data:
             buy_amt_inner = float(
                 buy_amt_inner + float(
-                    billsingle.medicine.buy_price)) * int(billsingle.qty)
+                    billsingle.medicine.cost_price)) * int(billsingle.quantity)
             sell_amt_inner = float(
                 sell_amt_inner + float(
-                    billsingle.medicine.sell_price)) * int(billsingle.qty)
+                    billsingle.medicine.sale_price)) * int(billsingle.quantity)
         profit_amt_inner = sell_amt_inner - buy_amt_inner
 
         profit_chart_list.append(
@@ -129,12 +129,13 @@ def administrator_dashboard(request):
          'medicine_expire': medicine_expire,
          'completed_requests': completed_requests,
          'pending_requests': pending_requests,
+         'sell_amt_today': sell_amt_today,
          'sell_amt': sell_amt})
 
 
 @login_required
-def pharmacist_dashboard(request):
+def employee_dashboard(request):
 
     return render(
-        request, 'pharmacist_index.html',
+        request, 'employee_index.html',
         {})

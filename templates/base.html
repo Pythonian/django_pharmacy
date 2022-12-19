@@ -8,6 +8,9 @@
     <title>{% block title %}{% endblock %} | Pharmacist Admin Board</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
     <link href="{% static 'css/waves.css' %}" rel="stylesheet" />
     <link href="{% static 'css/animate.css' %}" rel="stylesheet" />
@@ -76,20 +79,23 @@
                 <ul class="list">
                     <li class="{% url 'home' as home_url %}{% if request.get_full_path == home_url %}active{% endif %}">
                         <a href="{% url 'home' %}">
+                            <!-- <i class="fa-solid fa-home"></i> -->
                             <i class="material-icons">home</i>
                             <span>Home</span>
                         </a>
                     </li>
+                    <li
+                        class="{% url 'medicine_list' as medicine_list_url %} {% if request.get_full_path == medicine_list_url %}active{% endif %}">
+                        <a href="{% url 'medicine_list' %}">
+                            <i class="material-icons">local_hospital</i>
+                            <span>Manage Medicines</span>
+                        </a>
+                    </li>
+                    {% if request.user.is_administrator %}
                     <li class="{% url 'company_list' as company_list_url %} {% if request.get_full_path == company_list_url %}active{% endif %}">
                         <a href="{% url 'company_list' %}">
                             <i class="material-icons">assessment</i>
                             <span>Manage Companies</span>
-                        </a>
-                    </li>
-                    <li class="{% url 'medicine_list' as medicine_list_url %} {% if request.get_full_path == medicine_list_url %}active{% endif %}">
-                        <a href="{% url 'medicine_list' %}">
-                            <i class="material-icons">local_hospital</i>
-                            <span>Manage Medicines</span>
                         </a>
                     </li>
                     <li class="{% url 'company_account_list' as company_account_list_url %} {% if request.get_full_path == company_account_list_url %}active{% endif %}">
@@ -104,6 +110,7 @@
                             <span>Manage Employees</span>
                         </a>
                     </li>
+                    {% endif %}
                     <li class="{% url 'create_bill' as create_bill_url %} {% if request.get_full_path == create_bill_url %}active{% endif %}">
                         <a href="{% url 'create_bill' %}">
                             <i class="material-icons">local_printshop</i>
@@ -174,6 +181,47 @@
 
     <!-- Demo Js -->
     <script src="{% static 'js/demo.js' %}"></script>
+
+    <script>
+
+        const labels = Utils.months({ count: 7 });
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'My First Dataset',
+                data: [65, 59, 80, 81, 56, 55, 40],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        };
+        const config = {
+                type: 'line',
+                data: data,
+            };
+        
+        
+        const ctx = document.getElementById('myChart');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>
