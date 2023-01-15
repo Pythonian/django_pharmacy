@@ -2,16 +2,41 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.forms.models import modelformset_factory
+from decimal import Decimal
+from django.http import JsonResponse
 
 from account.models import Employee, EmployeeSalary
 
 from .forms import (BillDetailsForm, BillForm, CompanyAccountForm,
                     CompanyBankForm, CompanyForm, CustomerForm,
                     CustomerRequestForm, EmployeeForm,
-                    EmployeeSalaryForm, MedicineForm)
+                    EmployeeSalaryForm, MedicineForm, BillDetailsFormset, CustomerBillForm)
 from .models import (Bill, BillDetails, Company, CompanyAccount, CompanyBank,
                      Customer, CustomerRequest, Medicine)
 
+
+
+@login_required
+def customer_list(request):
+    customers = Customer.objects.all()
+    return render(
+        request, 'customer/list.html', {'customers': customers})
+
+
+@login_required
+def customer_create(request):
+    if request.method == 'POST':
+        form = CustomerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Customer successfully created.')
+            return redirect('customer_list')
+        else:
+            messages.warning(request, 'There was an issue identified below')
+    else:
+        form = CustomerForm()
+    return render(request, 'customer/form.html',
+                  {'form': form, 'create': True})
 
 #### COMPANY VIEWS ####
 
@@ -235,23 +260,72 @@ def employee_salary_create(request, id):
 
 def generate_customer_bill(request):
     # if request.method == 'POST':
-    bill_form = BillForm(request.POST or None)
-    BillDetailsFormset = modelformset_factory(BillDetails, form=BillDetailsForm, extra=1)
+    # bill_form = BillForm(request.POST or None)
+    # BillDetailsFormset = modelformset_factory(BillDetails, form=BillDetailsForm, extra=1)
     formset = BillDetailsFormset(request.POST or None)
+    customer_bill_form = CustomerBillForm(request.POST or None)
     # billdetails_form = BillDetailsForm(request.POST)
     
-    if bill_form.is_valid() and formset.is_valid():
-        bill_form.save()
-        formset.save()
-        messages.success(request, 'Bill successfully generated.')
-        return redirect('generate_customer_bill')
+    if customer_bill_form.is_valid() and formset.is_valid():
+        # bill_form.save()
+        # formset.save()
+        # print(customer_bill_form.customer)
+        customer = customer_bill_form.cleaned_data["customer"]
+        items = []
+        total_amount = Decimal("0.00")
+        for bill_form in formset:
+            bill_detail = bill_form.cleaned_data
+            medicine = bill_detail["medicine"]
+            ppu = Decimal(medicine.sale_price)
+            quantity = Decimal(bill_detail["quantity"])
+            total = ppu * quantity
+            total_amount += total
+            items.append({"name": medicine.name, "price_per_unit": str(ppu), "quantity": str(quantity), "total": str(total)})
+        
+        return JsonResponse({"total_amount": str(total_amount), "items": items}, safe=False)
+        # for form in formset:
+        #     form.save()
+        # messages.success(request, 'Bill successfully generated.')
+        # return redirect('generate_customer_bill')
     # else:
     #     bill_form = BillForm()
         # formset = BillDetailsFormset()
         # billdetails_form = BillDetailsForm()
     return render(request, 'bill/form.html',
-                  {'bill_form': bill_form, 'formset': formset})
+                  {'customer_form': customer_bill_form, 'formset': formset})
 
+
+
+
+
+
+def submit_customer_bill(request):
+    # if request.method == 'POST':
+    # bill_form = BillForm(request.POST or None)
+    # BillDetailsFormset = modelformset_factory(BillDetails, form=BillDetailsForm, extra=1)
+    formset = BillDetailsFormset(request.POST or None)
+    customer_bill_form = CustomerBillForm(request.POST or None)
+    # billdetails_form = BillDetailsForm(request.POST)
+    
+    if customer_bill_form.is_valid() and formset.is_valid():
+        # bill_form.save()
+        # formset.save()
+        # print(customer_bill_form.customer)
+        customer = customer_bill_form.cleaned_data["customer"]
+        for bill_form in formset:
+            bill_detail = bill_form.cleaned_data
+            print(bill_detail)
+            medicine = bill_detail["medicine"]
+            ppu = Decimal(medicine.sale_price)
+            quantity = Decimal(bill_detail["quantity"])
+            total = ppu * quantity
+            bill = Bill(customer=customer, total_amount=total, sold_by=request.user)
+            bill.save()
+            bill_detail = BillDetails(bill=bill, medicine=medicine, quantity=quantity)
+            bill_detail.save()
+        messages.success(request, 'Customer bill successfully created.')
+        return JsonResponse({"success": True})
+    return JsonResponse({"success": False})
 
 #### CUSTOMER REQUESTS ####
 

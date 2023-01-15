@@ -18,81 +18,191 @@
                         <form method="post" action="" id="billForm">
                             {% csrf_token %}
                             
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <label for="id_company">Customer name</label>
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            {{ bill_form.customer_name }}
-                                        </div>
+                            
+                            <div id="formCreationTab">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        {{ customer_form.as_p }}
                                     </div>
+                                    
                                 </div>
-                                <div class="col-lg-4">
-                                    <label for="id_company">Address</label>
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            {{ bill_form.customer_address }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="id_company">Phone</label>
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            {{ bill_form.customer_phonenumber }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <h4>Medicine Details</h4>
-                            {# formset.as_p #}
-                            <div class="row">
-                                {% for line in formset %}
-                                <div class="col-lg-6">
-                                    {{ line.as_p }}
+                                <h4>Medicine Details</h4>
+                                {{ formset.management_form }}
+                                <div class="row">
+                                    {% for line in formset %}
+                                    <div class="col-12 col-lg-7 medicine-formset">
+                                        {{ line.as_p }}
+                                    </div>
+                                    {% endfor %}
                                 </div>
-                                {% endfor %}
+                                <span class="btn btn-primary m-t-15 waves-effect" id="generateBillBtn">GENERATE BILL</span>
+                                <span id="add-btn" class="btn btn-info m-t-15 waves-effect">Add Medicine</span>
                             </div>
-                            <button type="submit" class="btn btn-primary m-t-15 waves-effect">GENERATE BILL</button>
+                            <div id="summaryData" class="d-none">
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+        
+
         <!-- #END# Vertical Layout -->
     </div>
 </section>
 
 <script>
-    var form = document.getElementById("form");
+    var form = document.getElementById("billForm");
     // Disable this submit button for now
     form.addEventListener("submit", (event) => {
         event.preventDefault();
     });
 
+    // let toastEl = document.querySelector('.toast');
+    let summaryEl = document.getElementById("summaryData");
+    // toastEl = new bootstrap.Toast(toastEl);
+
+    let generateBtn = document.getElementById("generateBillBtn");
+    summaryEl.addEventListener("click", async (event) => {
+        if (event.target.matches("#submitBill")) {
+            try {
+                let req = await fetch("{% url 'submit_bill' %}", {
+                    method: "POST",
+                    body: new FormData(form),
+                    credentials: "same-origin"
+                });
+                let data = await req.json();
+                if (req.ok && data.success) {
+                    // document.querySelector("#toastBody").textContent = "Bill generated successfully.";
+                    // toastEl.show();
+                    setTimeout(() => window.location.assign("{% url 'create_bill' %}"), 2000);
+                }
+            } catch (err) {
+                console.error(err);
+            };
+        }
+        
+    });
+
+    generateBtn.addEventListener("click", async (event) => {
+        // event.preventDefault();
+        let formsets = document.getElementsByClassName("medicine-formset")
+        document.getElementById("id_form-TOTAL_FORMS").value = formsets.length;
+        let req, text;
+        try {
+            const formData = new FormData(form);
+            req = await fetch("{% url 'create_bill' %}", {method: "POST", body: formData, credentials: "same-origin"});
+            text = await req.text();
+            let data = JSON.parse(text);
+            let html = getSummary(data);
+            html = `
+                <div class="row">
+                    <div class="col">
+                        ${html}
+                    </div>
+                </div>
+                <div class="row justify-items-center">
+                    <div class="col">
+                        <span class="btn btn-primary m-t-15 waves-effect" id="submitBill">Submit</button>
+                    </div>
+                </div>
+                `;
+            let summaryEl = document.getElementById("summaryData");
+            summaryEl.innerHTML = html;
+            summaryEl.style.direction = "none";
+            document.getElementById("formCreationTab").style.display = "none";
+
+        } catch(err) {
+            console.error(err);
+            console.log(text);
+        }
+    });
+    const addBtn = document.getElementById("add-btn");
+
+    addBtn.addEventListener("click", (event) => {
+        var medicines = document.getElementsByClassName("medicine-formset");
+        var lastMedicine = medicines[medicines.length - 1];
+        var newMedicine = lastMedicine.cloneNode(true);
+        var regex = /id_form\-(\d+)\-medicine/;
+        var lastMedicineLabel = lastMedicine.querySelector("label");
+        var htmlFor = lastMedicineLabel.htmlFor;
+        var lastNumber = Number(htmlFor.match(regex)[1]);
+        var newNumber = lastNumber + 1;
+        var newMedicineLabel = newMedicine.querySelector("label");
+        newMedicineLabel.htmlFor = `id_form-${newNumber}-medicine`;
+        var newMedicineSelect = newMedicine.querySelector("select");
+        newMedicineSelect.id = `id_form-${newNumber}-medicine`;
+        newMedicineSelect.name = `form-${newNumber}-medicine`;
+        var newMedicineQtyLabel = newMedicine.querySelector(`label[for="id_form-${lastNumber}-quantity"]`);
+        newMedicineQtyLabel.htmlFor = `id_form-${newNumber}-quantity`;
+        newMedicineQtyLabel.nextElementSibling.id = `id_form-${newNumber}-quantity`;
+        newMedicineQtyLabel.nextElementSibling.name = `form-${newNumber}-quantity`;
+        newMedicineQtyLabel.nextElementSibling.value = "";
+        lastMedicine.parentNode.appendChild(newMedicine);
+
+    });
+    
+    function getSummary(data) {
+            let total_amount = data.total_amount;
+            let html = `
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Medicine</th>
+                    <th scope="col">Price Per Unit</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+            let tbody = data.items.map((item) => {
+                let html = `
+        <tr>
+            <th scope="row">${item.name}</th>
+            <td>${item.price_per_unit}</th>
+            <td>${item.quantity}</th>
+            <td>${item.total}</th>
+        </tr>
+        `;
+                return html;
+            });
+
+            tbody = tbody.join("\n");
+            html += tbody;
+            html += `
+        <td scope="row">Total</td>
+        <td></td>
+        <td></td>
+        <td>${total_amount}</td>
+    `;
+            html += "</tbody></table>";
+            return html;
+        }
+    
     // You can use 'change' event rather but 'input' event listens
     // as the user types while 'change' happens when the user leaves
     // the input. Replace and see the differences
-    form.addEventListener("input", (event) => {
-        // Cast the values to integers
-        var amount = Number(document.getElementById("amount").value);
-        // Return zero instead in case we get NaN from the coercion
-        amount = amount ? amount : 0;
+    // form.addEventListener("input", (event) => {
+    //     // Cast the values to integers
+    //     var amount = Number(document.getElementById("amount").value);
+    //     // Return zero instead in case we get NaN from the coercion
+    //     amount = amount ? amount : 0;
 
-        var quantity = Number(document.getElementById("id_quantity").value);
-        quantity = quantity ? quantity : 0;
+    //     var quantity = Number(document.getElementById("id_quantity").value);
+    //     quantity = quantity ? quantity : 0;
 
-        var total = document.getElementById("total");
+    //     var total = document.getElementById("total");
 
-        if (amount && quantity) {
-            // both amount and quantity are valid integers
-            total.textContent = amount * quantity;
-        } else {
-            // clear the field
-            total.textContent = "";
-        }
-    });
+    //     if (amount && quantity) {
+    //         // both amount and quantity are valid integers
+    //         total.textContent = amount * quantity;
+    //     } else {
+    //         // clear the field
+    //         total.textContent = "";
+    //     }
+    // });
 </script>
 
 {% endblock %}

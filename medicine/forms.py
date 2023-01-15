@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import formset_factory, BaseModelFormSet, ModelChoiceField
 
 from account.models import EmployeeSalary, Employee
 
@@ -136,6 +137,11 @@ class CustomerRequestForm(forms.ModelForm):
 
 
 class CustomerForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.visible_fields():
+            field.field.widget.attrs['class'] = 'form-control'
+
     class Meta:
         model = Customer
         fields = "__all__"
@@ -150,13 +156,23 @@ class BillForm(forms.ModelForm):
         model = Bill
         fields = "__all__"
         # fields = ['customer', 'total_amount']
-        
 
-class BillDetailsForm(forms.ModelForm):
+class CustomerBillForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.visible_fields():
             field.field.widget.attrs['class'] = 'form-control'
-    class Meta:
-        model = BillDetails
-        fields = ['medicine', 'quantity']
+    
+    customer = ModelChoiceField(queryset=Customer.objects.all())
+
+
+class BillDetailsForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.visible_fields():
+            field.field.widget.attrs['class'] = 'form-control'
+    medicine = ModelChoiceField(queryset=Medicine.objects.all(),)
+    quantity = forms.IntegerField(max_value=100, min_value=1)
+
+BillDetailsFormset = formset_factory(BillDetailsForm, extra=1)
+

@@ -15,6 +15,9 @@ urlpatterns = [
     path('medicine/create/', views.medicine_create, name='medicine_create'),
     path('medicine/<int:id>/', views.medicine_update, name='medicine_update'),
 
+    path('customers/', views.customer_list, name='customer_list'),
+    path('customer/create/', views.customer_create, name='customer_create'),
+
     path('company/accounts/',
          views.company_account_list, name='company_account_list'),
     path('company/account-create/',
@@ -28,6 +31,7 @@ urlpatterns = [
          views.employee_salary_create, name='employee_salary_create'),
 
     path('generate-bill/', views.generate_customer_bill, name='create_bill'),
+    path('submit-bill/', views.submit_customer_bill, name='submit_bill'),
 
     path('customer-requests/',
          views.customer_requests, name='customer_requests'),

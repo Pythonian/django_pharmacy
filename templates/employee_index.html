@@ -10,6 +10,154 @@
             <h2>DASHBOARD</h2>
         </div>
 
+        <!-- Widgets -->
+        <div class="row clearfix">
+            <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box bg-pink hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">bookmark</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">TOTAL REQUESTS</div>
+                        <div class="number count-to" data-from="0" data-to="{{ customer_request }}" data-speed="15"
+                            data-fresh-interval="20"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box bg-pink hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">bookmark</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">COMPLETED REQUESTS</div>
+                        <div class="number count-to" data-from="0" data-to="{{ completed_requests }}" data-speed="15"
+                            data-fresh-interval="20"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box bg-cyan hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">bookmark</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">PENDING REQUESTS</div>
+                        <div class="number count-to" data-from="0" data-to="{{ pending_requests }}" data-speed="1000"
+                            data-fresh-interval="20"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box bg-light-green hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">bookmark</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">TOTAL MEDICINES</div>
+                        <div class="number count-to" data-from="0" data-to="{{ medicine_count }}" data-speed="1000"
+                            data-fresh-interval="20"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box bg-orange hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">bookmark</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">MEDICINE EXPIRE IN WEEK</div>
+                        <div class="number count-to" data-from="0" data-to="{{ medicine_expire }}" data-speed="1000"
+                            data-fresh-interval="20"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box bg-cyan hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">bookmark</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">TOTAL SALES</div>
+                        <div class="number count-to" data-from="0" data-to="{{ bill_count }}" data-speed="1000"
+                            data-fresh-interval="20"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box bg-orange hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">bookmark</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">TOTAL COMPANIES</div>
+                        <div class="number count-to" data-from="0" data-to="{{ company_count }}" data-speed="1000"
+                            data-fresh-interval="20"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box bg-pink hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">bookmark</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">TOTAL EMPLOYEES</div>
+                        <div class="number count-to" data-from="0" data-to="{{ employee_count }}" data-speed="15"
+                            data-fresh-interval="20"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box bg-cyan hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">bookmark</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">TOTAL PROFIT</div>
+                        <div class="number count-to" data-from="0" data-to="{{ profit_amt }}" data-speed="1000"
+                            data-fresh-interval="20"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box bg-light-green hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">bookmark</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">TOTAL SALES AMOUNT</div>
+                        <div class="number count-to" data-from="0" data-to="{{ sell_amt }}" data-speed="1000"
+                            data-fresh-interval="20"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box bg-light-green hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">bookmark</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">TODAY SALES AMOUNT</div>
+                        <div class="number count-to" data-from="0" data-to="{{ sell_amt_today }}" data-speed="1000"
+                            data-fresh-interval="20"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box bg-orange hover-expand-effect">
+                    <div class="icon">
+                        <i class="material-icons">bookmark</i>
+                    </div>
+                    <div class="content">
+                        <div class="text">TODAY SALES PROFIT</div>
+                        <div class="number count-to" data-from="0" data-to="{{ profit_amt_today }}" data-speed="1000"
+                            data-fresh-interval="20"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- #END# Widgets -->
     </div>
 </section>
 

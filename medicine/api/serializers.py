@@ -1,7 +1,7 @@
 import imp
 from rest_framework import serializers
 
-from ..models import Company, Medicine, Employee
+from ..models import Company, Medicine, Employee, Bill, BillDetails
 
 
 class CompanySerializer(serializers.HyperlinkedModelSerializer):

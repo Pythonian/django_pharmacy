@@ -1,6 +1,6 @@
 from django.db import models
 
-from account.models import Employee
+from account.models import Employee, User
 
 
 class Company(models.Model):
@@ -104,7 +104,7 @@ class Bill(models.Model):
     total_amount = models.DecimalField(
         max_digits=15, decimal_places=2,
         blank=True, null=True)
-    sold_by = models.ForeignKey(Employee, related_name='sold_medicines', on_delete=models.CASCADE)
+    sold_by = models.ForeignKey(User, related_name='sold_medicines', on_delete=models.CASCADE)
     added_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

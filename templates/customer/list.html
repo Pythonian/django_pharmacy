@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Customers{% endblock %}
+
+{% block content %}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <h2>MANAGE CUSTOMERS</h2>
+        </div>
+
+        {% include 'partials/alerts.html' %}
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            All Customers
+                        </h2>
+                        <div class="header-dropdown m-r--5">
+                            <a href="{% url 'customer_create' %}" class="btn btn-info">Add Customer</a>
+                        </div>
+                    </div>
+                    <div class="body table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>NAME</th>
+                                    <th>CONTACT</th>
+                                    <th>ADDRESS</th>
+                                    <th>ADDED ON</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for customer in customers %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td><a href="{# url 'customer_detail' customer.id #}">{{ customer.name }}</a></td>
+                                    <td>{{ customer.contact }}</td>
+                                    <td>{{ customer.address }}</td>
+                                    <td>{{ customer.added_on }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- #END# Hover Rows -->
+
+    </div>
+</section>
+
+{% endblock %}
